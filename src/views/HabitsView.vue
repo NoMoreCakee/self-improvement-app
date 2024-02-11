@@ -1,25 +1,28 @@
 <template>
-  <div class="w-5/6" :class="isOpen ? 'flex' : 'flex flex-col'">
-    <HabitAddBar @closed="hmbClosed()" v-if="isOpen" @added="appendHabit" />
-    <div v-else class="w-1/6 p-5" id="">
-      <div
-        class="hover:bg-gray-300 p-2 w-1/6 rounded-full cursor-pointer"
-        @click="this.isOpen = true"
-      >
-        <Transition name="disappear">
-          <img src="../assets/hamburger.svg" id="img" />
-        </Transition>
+  <div class="flex">
+    <NavBar id="navbar" />
+    <div class="w-5/6" :class="isOpen ? 'flex' : 'flex flex-col'">
+      <HabitAddBar @closed="hmbClosed()" v-if="isOpen" @added="appendHabit" />
+      <div v-else class="w-1/6 p-5" id="">
+        <div
+          class="hover:bg-gray-300 p-2 w-1/6 rounded-full cursor-pointer"
+          @click="this.isOpen = true"
+        >
+          <Transition name="disappear">
+            <img src="../assets/hamburger.svg" id="img" />
+          </Transition>
+        </div>
       </div>
-    </div>
-    <div :class="isOpen ? 'w-5/6' : 'w-full'">
-      <HabitPanel
-        v-for="habit in habits"
-        :key="habit.id"
-        :object="habit"
-        :isOpen="isOpen"
-        @done="doneHabit"
-        @delete="deleteHabit"
-      />
+      <div :class="isOpen ? 'w-5/6' : 'w-full'">
+        <HabitPanel
+          v-for="habit in habits"
+          :key="habit.id"
+          :object="habit"
+          :isOpen="isOpen"
+          @done="doneHabit"
+          @delete="deleteHabit"
+        />
+      </div>
     </div>
   </div>
 </template>

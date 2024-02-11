@@ -6,6 +6,7 @@ import App from './App.vue'
 
 import HomeView from './views/HomeView.vue'
 import HabitsView from './views/HabitsView.vue'
+import loginView from './views/LoginView.vue'
 
 import NavBar from './components/NavBar.vue'
 import TextBox from './components/TextBox.vue'
@@ -19,6 +20,7 @@ const router = createRouter({
   routes: [
     { path: '/', component: HomeView },
     { path: '/habits', component: HabitsView },
+    { path: '/login', component: loginView },
   ],
 })
 app.use(router)

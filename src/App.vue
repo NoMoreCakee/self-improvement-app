@@ -1,8 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="flex max-h-screen">
-    <NavBar id="navbar" />
+  <div class="max-h-screen">
     <router-view />
   </div>
 </template>

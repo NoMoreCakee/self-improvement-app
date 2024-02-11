@@ -1,7 +1,10 @@
 <template>
-  <div class="p-5 w-5/6">
-    <TextBox title="Who are we?" text="lorem" />
-    <TodoPanel />
+  <div class="flex">
+    <NavBar id="navbar" />
+    <div class="p-5 w-5/6">
+      <TextBox title="Who are we?" text="lorem" />
+      <TodoPanel />
+    </div>
   </div>
 </template>
 
