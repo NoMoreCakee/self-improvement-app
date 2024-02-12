@@ -40,7 +40,7 @@ app.post('/login', async (req, res) => {
     } else {
       const user_data = await getUserByName(username)
       console.log(user_data)
-      if (password === user_data.pass_hash) {
+      if (password === user_data?.pass_hash) {
         req.session.authenticated = true
         req.session.user = {
           username: username,
