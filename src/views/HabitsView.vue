@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <NavBar id="navbar" />
+    <NavBar id="navbar" @logout="logout" />
     <div class="w-5/6" :class="isOpen ? 'flex' : 'flex flex-col'">
       <HabitAddBar @closed="hmbClosed()" v-if="isOpen" @added="appendHabit" />
       <div v-else class="w-1/6 p-5" id="">
@@ -32,6 +32,12 @@ import HabitAddBar from "../components/HabitAddBar.vue";
 import HabitPanel from "../components/HabitPanel.vue";
 export default {
   components: { HabitAddBar, HabitPanel },
+  props: ["session"],
+  updated() {
+    if (!this.session) {
+      this.$router.push("/");
+    }
+  },
   data() {
     return {
       isOpen: true,
@@ -64,6 +70,9 @@ export default {
     },
     deleteHabit(id) {
       this.habits = this.habits.filter((h) => h.id != id);
+    },
+    logout() {
+      this.$emit("logout");
     },
   },
   watch: {

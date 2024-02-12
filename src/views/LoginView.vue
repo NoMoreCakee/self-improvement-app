@@ -6,6 +6,11 @@
       Login to *insert name here*
     </h1>
     <form @submit.prevent="attemptLogin()" class="text-center">
+      <TextBox
+        class="bg-red-300 border-red-400 my-4 mx-4 p-0 font-medium"
+        text="Wrong credentials!"
+        v-if="wasIncorrect"
+      />
       <InputBar
         in_type="text"
         class="w-1/2"
@@ -24,7 +29,6 @@
         class="w-1/3 py-1 text-xl my-4 font-medium"
         in_text="Login"
       />
-      {{ loginData }}
     </form>
   </div>
 </template>
@@ -37,6 +41,7 @@ export default {
         username: "",
         password: "",
       },
+      wasIncorrect: false,
     };
   },
   methods: {
@@ -51,16 +56,24 @@ export default {
           mode: "cors",
         });
         if (response.ok) {
-          // const data = await response.json();
-          router.push("/");
+          const data = await response.json();
+          this.emitData(data);
+          this.$router.push("/home");
+          return true;
         } else {
-          throw new Error(
-            `Request failed with the status ${response.status}: ${response.statusText}`
-          );
+          this.wasIncorrect = true;
+          setTimeout(() => {
+            this.wasIncorrect = false;
+          }, 3000);
         }
-      } catch {
-        console.error("error during login:", error.message);
+      } catch (err) {
+        if (err.status !== 403) {
+          console.error("error during login: ", err.message);
+        }
       }
+    },
+    emitData(data) {
+      this.$emit("emitData", data);
     },
   },
 };

@@ -18,9 +18,9 @@ const app = createApp(App)
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: HomeView },
+    { path: '/', component: loginView },
+    { path: '/home', component: HomeView },
     { path: '/habits', component: HabitsView },
-    { path: '/login', component: loginView },
   ],
 })
 app.use(router)

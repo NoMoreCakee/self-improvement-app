@@ -13,6 +13,7 @@
         {{ link.name }}
       </div>
     </router-link>
+    <DefaultButton in_text="Logout" class="mx-auto" @click="logout" />
   </div>
 </template>
 
@@ -24,7 +25,7 @@ export default {
         {
           id: 1,
           name: "Home",
-          path: "/",
+          path: "/home",
         },
         {
           id: 2,
@@ -33,6 +34,12 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    logout() {
+      console.log("logout");
+      this.$emit("logout");
+    },
   },
 };
 </script>
