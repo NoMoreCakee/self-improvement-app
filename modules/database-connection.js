@@ -29,6 +29,18 @@ async function getUser(id) {
   return rows[0]
 }
 
+async function getUserByName(user_name) {
+  const [rows] = await pool.query(
+    `
+  SELECT *
+  FROM users
+  WHERE username = ?
+  `,
+    [user_name],
+  )
+  return rows[0]
+}
+
 async function createUser(username, email, pass_hash) {
   const result = await pool.query(
     `
@@ -50,6 +62,7 @@ async function getHabits(user_id) {
 module.exports = {
   getUsers,
   getUser,
+  getUserByName,
   createUser,
   getHabits,
 }

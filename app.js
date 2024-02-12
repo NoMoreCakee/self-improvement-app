@@ -6,6 +6,7 @@ const cors = require('cors')
 const {
   getUsers,
   getUser,
+  getUserByName,
   createUser,
   getHabits,
 } = require('./modules/database-connection.js')
@@ -28,7 +29,7 @@ app.use(
 app.use(cors())
 app.use(express.json())
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
   console.log(req.sessionID)
   console.log(req.body)
   const { username, password } = req.body
@@ -37,14 +38,16 @@ app.post('/login', (req, res) => {
       res.json(res.session)
       console.log('already authenticated')
     } else {
-      if (password === 'pass') {
+      const user_data = await getUserByName(username)
+      console.log(user_data)
+      if (password === user_data.pass_hash) {
         req.session.authenticated = true
         req.session.user = {
-          username,
-          password,
+          username: username,
+          id: user_data.id,
         }
         console.log('Authenticated')
-        res.send(req.session)
+        res.status(201).send(req.session)
       } else {
         console.log('Bad credentials')
         res.status(403).json({ msg: 'Bad Credentials' })
