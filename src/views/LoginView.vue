@@ -11,6 +11,11 @@
         text="Wrong credentials!"
         v-if="wasIncorrect"
       />
+      <TextBox
+        class="bg-red-300 border-red-400 my-4 mx-4 p-0 font-medium"
+        text="Empty or incorrect data!"
+        v-if="emptyData"
+      />
       <InputBar
         in_type="text"
         class="w-1/2"
@@ -42,34 +47,42 @@ export default {
         password: "",
       },
       wasIncorrect: false,
+      emptyData: null,
     };
   },
   methods: {
     async attemptLogin() {
-      try {
-        const response = await fetch("http://127.0.0.1:3080/login", {
-          method: "POST",
-          body: JSON.stringify(this.loginData),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-          mode: "cors",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          this.emitData(data);
-          this.$router.push("/home");
-          return true;
-        } else {
-          this.wasIncorrect = true;
-          setTimeout(() => {
-            this.wasIncorrect = false;
-          }, 3000);
+      if (this.loginData.username && this.loginData.password) {
+        try {
+          const response = await fetch("http://127.0.0.1:3080/login", {
+            method: "POST",
+            body: JSON.stringify(this.loginData),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+            mode: "cors",
+          });
+          if (response.ok) {
+            const data = await response.json();
+            this.emitData(data);
+            this.$router.push("/home");
+            return true;
+          } else {
+            this.wasIncorrect = true;
+            setTimeout(() => {
+              this.wasIncorrect = false;
+            }, 3000);
+          }
+        } catch (err) {
+          if (err.status !== 403) {
+            console.error("error during login: ", err.message);
+          }
         }
-      } catch (err) {
-        if (err.status !== 403) {
-          console.error("error during login: ", err.message);
-        }
+      } else {
+        this.emptyData = true;
+        setTimeout(() => {
+          this.emptyData = false;
+        }, 3000);
       }
     },
     emitData(data) {
