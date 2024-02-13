@@ -3,6 +3,7 @@
     <div>
       <img src="../assets/vue.svg" class="mx-auto w-24 my-3" />
     </div>
+    <p class="font-medium">{{ session ? session.user.username : "" }}</p>
     <router-link
       v-for="link in links"
       :key="link.id"
@@ -19,6 +20,7 @@
 
 <script>
 export default {
+  props: ["session"],
   data() {
     return {
       links: [
@@ -39,6 +41,7 @@ export default {
     logout() {
       console.log("logout");
       this.$emit("logout");
+      this.$router.push("/");
     },
   },
 };

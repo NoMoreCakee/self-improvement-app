@@ -3,14 +3,9 @@
     class="w-1/3 mx-auto bg-gray-200 border-2 border-gray-300 my-4 rounded-lg"
   >
     <h1 class="text-2xl font-medium text-center my-4">
-      Login to *insert name here*
+      Register to *insert name here*
     </h1>
-    <form @submit.prevent="attemptLogin()" class="text-center">
-      <TextBox
-        class="bg-red-300 border-red-400 my-4 mx-4 p-0 font-medium"
-        text="Wrong credentials!"
-        v-if="wasIncorrect"
-      />
+    <form @submit.prevent="attemptRegister()" class="text-center">
       <TextBox
         class="bg-red-300 border-red-400 my-4 mx-4 p-0 font-medium"
         text="Empty or incorrect data!"
@@ -20,7 +15,7 @@
         in_type="text"
         class="w-1/2"
         in_placeholder="Username"
-        v-model="loginData.username"
+        v-model="registerData.username"
       /><br />
       <InputBar
         in_type="password"
@@ -29,18 +24,25 @@
         v-model="password"
       />
       <br />
+      <InputBar
+        in_type="email"
+        class="w-1/2"
+        in_placeholder="E-mail"
+        v-model="registerData.email"
+      />
+      <br />
       <br />
       <DefaultButton
         class="w-1/3 py-1 text-xl my-4 font-medium"
-        in_text="Login"
+        in_text="Register"
       />
     </form>
     <p class="text-center mb-4 text-lg">
-      No account?
+      Already have an account?
       <router-link
-        to="/register"
+        to="/"
         class="text-blue-600 hover:text-blue-700 hover:underline font-medium"
-        >Register here!</router-link
+        >Login here!</router-link
       >
     </p>
   </div>
@@ -48,57 +50,45 @@
 
 <script>
 export default {
+  props: ["session"],
   data() {
     return {
       password: "",
-
-      loginData: {
+      registerData: {
         username: "",
         hashedPass: "",
+        email: "",
       },
-      wasIncorrect: false,
       emptyData: null,
     };
   },
   methods: {
-    async attemptLogin() {
-      if (this.loginData.username && this.password) {
+    emitData(data) {
+      this.$emit("emitData", data);
+    },
+    async attemptRegister() {
+      if (
+        this.registerData.username &&
+        this.password &&
+        this.registerData.email
+      ) {
         await this.hashPassword(this.password);
-        console.log(this.password);
         try {
-          const response = await fetch("http://127.0.0.1:3080/login", {
+          const result = await fetch("http://127.0.0.1:3080/register", {
             method: "POST",
-            body: JSON.stringify(this.loginData),
+            body: JSON.stringify(this.registerData),
             headers: {
               "Content-type": "application/json; charset=UTF-8",
             },
             mode: "cors",
           });
-          if (response.ok) {
-            const data = await response.json();
-            this.emitData(data);
-            this.$router.push("/home");
-            return true;
-          } else {
-            this.wasIncorrect = true;
-            setTimeout(() => {
-              this.wasIncorrect = false;
-            }, 3000);
+          if (result.ok) {
+            this.$router.push("/");
           }
         } catch (err) {
-          if (err.status !== 403) {
-            console.error("error during login: ", err.message);
-          }
+          console.log("no");
         }
-      } else {
-        this.emptyData = true;
-        setTimeout(() => {
-          this.emptyData = false;
-        }, 3000);
       }
-    },
-    emitData(data) {
-      this.$emit("emitData", data);
     },
     async hashPassword(plain_pass) {
       try {
@@ -110,7 +100,7 @@ export default {
         const hashedString = hashArray
           .map((byte) => byte.toString(16).padStart(2, "0"))
           .join("");
-        this.loginData.hashedPass = hashedString;
+        this.registerData.hashedPass = hashedString;
       } catch (error) {
         console.error("Error hashing password:", error);
       }

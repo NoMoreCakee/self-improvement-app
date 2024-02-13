@@ -7,6 +7,7 @@ import App from './App.vue'
 import HomeView from './views/HomeView.vue'
 import HabitsView from './views/HabitsView.vue'
 import loginView from './views/LoginView.vue'
+import RegisterView from './views/RegisterView.vue'
 
 import NavBar from './components/NavBar.vue'
 import TextBox from './components/TextBox.vue'
@@ -21,6 +22,7 @@ const router = createRouter({
     { path: '/', component: loginView },
     { path: '/home', component: HomeView },
     { path: '/habits', component: HabitsView },
+    { path: '/register', component: RegisterView },
   ],
 })
 app.use(router)

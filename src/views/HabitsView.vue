@@ -33,7 +33,7 @@ import HabitPanel from "../components/HabitPanel.vue";
 export default {
   components: { HabitAddBar, HabitPanel },
   props: ["session"],
-  updated() {
+  mounted() {
     if (!this.session) {
       this.$router.push("/");
     }

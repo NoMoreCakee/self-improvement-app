@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <div class="max-h-screen">
     <router-view @emitData="setSession" :session="session" @logout="logout" />
@@ -16,7 +14,7 @@ export default {
   methods: {
     setSession(data) {
       this.session = data;
-      console.log(this.session.user);
+      console.log(this.session.user.username);
     },
     logout() {
       this.session = undefined;
