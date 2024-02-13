@@ -32,15 +32,15 @@ app.use(express.json())
 app.post('/login', async (req, res) => {
   console.log(req.sessionID)
   console.log(req.body)
-  const { username, password } = req.body
-  if (username && password) {
+  const { username, hashedPass } = req.body
+  if (username && hashedPass) {
     if (req.session.authenticated) {
       res.json(res.session)
       console.log('already authenticated')
     } else {
       const user_data = await getUserByName(username)
       console.log(user_data)
-      if (password === user_data?.pass_hash) {
+      if (hashedPass === user_data?.pass_hash) {
         req.session.authenticated = true
         req.session.user = {
           username: username,
@@ -56,6 +56,25 @@ app.post('/login', async (req, res) => {
   } else {
     console.log('Bad credentials')
     res.status(403).json({ msg: 'Bad Credentials' })
+  }
+})
+
+app.post('/register', async (req, res) => {
+  console.log(req.body)
+  const { username, hashedPass, email } = req.body
+  if (username && hashedPass && email) {
+    if (req.session.authenticated) {
+      res.json(res.session)
+    } else {
+      const response = await createUser(username, hashedPass, email)
+      if (response.success) {
+        res.send('Ok')
+      } else {
+        res.status(503).send('Server-side error!')
+      }
+    }
+  } else {
+    res.status(300).send('idk man')
   }
 })
 

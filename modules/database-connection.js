@@ -44,11 +44,12 @@ async function getUserByName(user_name) {
 async function createUser(username, email, pass_hash) {
   const result = await pool.query(
     `
-    INSERT INTO users (username, email, pass_hash)
+    INSERT INTO users (username, pass_hash, email)
     VALUES (?, ?, ?)
   `,
     [username, email, pass_hash],
   )
+  result.success = true
   return result
 }
 
