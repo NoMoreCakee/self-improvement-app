@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import './style.css'
+import VueCookies from 'vue-cookies'
 
 import App from './App.vue'
 
@@ -26,6 +27,7 @@ const router = createRouter({
   ],
 })
 app.use(router)
+app.use(VueCookies, { expires: '7d' })
 app.component('NavBar', NavBar)
 app.component('TextBox', TextBox)
 app.component('InputBar', InputBar)

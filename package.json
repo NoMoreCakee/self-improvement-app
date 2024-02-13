@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "vue": "^3.4.15",
+    "vue-cookie": "^1.1.4",
+    "vue-cookies": "^1.8.3",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

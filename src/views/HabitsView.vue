@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <NavBar id="navbar" @logout="logout" />
+    <NavBar id="navbar" @logout="logout" :session="session" />
     <div class="w-5/6" :class="isOpen ? 'flex' : 'flex flex-col'">
       <HabitAddBar @closed="hmbClosed()" v-if="isOpen" @added="appendHabit" />
       <div v-else class="w-1/6 p-5" id="">
