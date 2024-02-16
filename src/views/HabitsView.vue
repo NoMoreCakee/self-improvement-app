@@ -10,13 +10,22 @@
         />
       </div>
       <div class="w-5/6">
-        <HabitPanel
-          v-for="habit in habits[0]"
-          :key="habit.habit_id"
-          :object="habit"
-          @done="doneHabit"
-          @delete="deleteHabit"
-        />
+        <div v-if="loading">
+          <p>Loading...</p>
+        </div>
+        <div v-else>
+          <div v-if="habits.length == 0">
+            <h1>No habits yet</h1>
+          </div>
+          <HabitPanel
+            v-for="habit in habits"
+            :key="habit.habit_id"
+            :object="habit"
+            @done="doneHabit"
+            @delete="deleteHabit"
+            v-else
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -28,16 +37,26 @@ import HabitPanel from "../components/HabitPanel.vue";
 export default {
   components: { HabitAddBar, HabitPanel },
   props: ["session"],
-  async mounted() {
+  async created() {
     if (!this.session) {
       this.$router.push("/");
     } else {
-      this.habits = await this.getHabits();
+      const result = await fetch("http://127.0.0.1:3080/habits", {
+        method: "POST",
+        body: JSON.stringify({ user_id: this.session.id }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        mode: "cors",
+      });
+      const data = await result.json();
+      this.habits = data;
+      this.isLoading = false;
     }
   },
   data() {
     return {
-      isOpen: true,
+      isLoading: true,
       habits: [],
     };
   },
@@ -71,9 +90,7 @@ export default {
         },
         mode: "cors",
       });
-      if (result.ok) {
-        this.getHabits();
-      }
+      this.getHabits();
     },
     logout() {
       this.$emit("logout");
@@ -87,11 +104,9 @@ export default {
         },
         mode: "cors",
       });
-      if (result.ok) {
-        const data = await result.json();
-        this.habits.push(data);
-        console.log(this.habits);
-      }
+      const data = await result.json();
+      this.habits = data;
+      console.log(this.habits);
     },
   },
 };
