@@ -8,8 +8,14 @@
       @click="checkTodo"
       class="w-11/12"
     >
-      <h1 class="text-xl">{{ object.name }}</h1>
-      <p class="text-lg">{{ object.rep }}</p>
+      <h1 class="text-xl">{{ object.habit_name }}</h1>
+      <div class="flex gap-2">
+        <p class="text-lg">{{ object.habit_frequency }}</p>
+        <p v-if="object.habit_frequency == 'weekly'">
+          {{ object.habit_days.split("") }}
+        </p>
+        <p class="text-lg">{{ object.habit_time }}</p>
+      </div>
     </div>
     <div
       class="py-3 rounded-full hover:bg-gray-400 duration-150"
@@ -25,10 +31,10 @@ export default {
   props: ["object", "isOpen"],
   methods: {
     checkTodo() {
-      this.$emit("done", this.object.id);
+      this.$emit("done", this.object.habit_id);
     },
     deleteTodo() {
-      this.$emit("delete", this.object.id);
+      this.$emit("delete", this.object.habit_id);
     },
   },
 };

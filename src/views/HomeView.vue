@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex w-full">
     <NavBar id="navbar" @logout="logout" :session="session" />
     <div class="p-5 w-5/6">
       <TextBox title="Who are we?" text="lorem" />
@@ -20,6 +20,7 @@ export default {
   mounted() {
     if (!this.session) {
       this.$router.push("/");
+      console.log(this.session);
     }
   },
   components: { TodoPanel },

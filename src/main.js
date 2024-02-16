@@ -24,6 +24,7 @@ const router = createRouter({
     { path: '/home', component: HomeView },
     { path: '/habits', component: HabitsView },
     { path: '/register', component: RegisterView },
+    { path: '/:notFound', redirect:'/'}
   ],
 })
 app.use(router)
