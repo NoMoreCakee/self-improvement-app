@@ -1,27 +1,31 @@
 <template>
   <div class="flex">
     <NavBar id="navbar" @logout="logout" :session="session" />
-    <div class="w-5/6" :class="isOpen ? 'flex' : 'flex flex-col'">
-      <HabitAddBar @closed="hmbClosed()" v-if="isOpen" @added="appendHabit" />
-      <div v-else class="w-1/6 p-5" id="">
-        <div
-          class="hover:bg-gray-300 p-2 w-1/6 rounded-full cursor-pointer"
-          @click="this.isOpen = true"
-        >
-          <Transition name="disappear">
-            <img src="../assets/hamburger.svg" id="img" />
-          </Transition>
-        </div>
-      </div>
-      <div :class="isOpen ? 'w-5/6' : 'w-full'">
-        <HabitPanel
-          v-for="habit in habits"
-          :key="habit.id"
-          :object="habit"
-          :isOpen="isOpen"
-          @done="doneHabit"
-          @delete="deleteHabit"
+    <div class="w-5/6 flex">
+      <div class="w-1/6">
+        <HabitAddBar
+          @added="appendHabit"
+          :session="session"
+          @refresh-habits="getHabits"
         />
+      </div>
+      <div class="w-5/6">
+        <div v-if="loading">
+          <p>Loading...</p>
+        </div>
+        <div v-else>
+          <div v-if="habits.length == 0">
+            <h1>No habits yet</h1>
+          </div>
+          <HabitPanel
+            v-for="habit in habits"
+            :key="habit.habit_id"
+            :object="habit"
+            @done="doneHabit"
+            @delete="deleteHabit"
+            v-else
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -33,21 +37,30 @@ import HabitPanel from "../components/HabitPanel.vue";
 export default {
   components: { HabitAddBar, HabitPanel },
   props: ["session"],
-  mounted() {
+  async created() {
     if (!this.session) {
       this.$router.push("/");
+    } else {
+      const result = await fetch("http://127.0.0.1:3080/habits", {
+        method: "POST",
+        body: JSON.stringify({ user_id: this.session.id }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        mode: "cors",
+      });
+      const data = await result.json();
+      this.habits = data;
+      this.isLoading = false;
     }
   },
   data() {
     return {
-      isOpen: true,
+      isLoading: true,
       habits: [],
     };
   },
   methods: {
-    hmbClosed() {
-      this.isOpen = false;
-    },
     sortByBool(a, b) {
       if (a.isDone && !b.isDone) {
         return 1;
@@ -68,29 +81,32 @@ export default {
         current_habit.isDone = !current_habit.isDone;
       }
     },
-    deleteHabit(id) {
-      this.habits = this.habits.filter((h) => h.id != id);
+    async deleteHabit(id) {
+      const result = await fetch("http://127.0.0.1:3080/deleteHabit", {
+        method: "POST",
+        body: JSON.stringify({ habit_id: id }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        mode: "cors",
+      });
+      this.getHabits();
     },
     logout() {
       this.$emit("logout");
     },
-  },
-  watch: {
-    habits: {
-      handler(val) {
-        this.habits.sort((a, b) => {
-          if (a.isDone !== b.isDone) {
-            return a.isDone ? 1 : -1;
-          } else {
-            const nameA = a.name.toLowerCase();
-            const nameB = b.name.toLowerCase();
-            if (nameA < nameB) return -1;
-            if (nameA > nameB) return 1;
-            return 0;
-          }
-        });
-      },
-      deep: true,
+    async getHabits() {
+      const result = await fetch("http://127.0.0.1:3080/habits", {
+        method: "POST",
+        body: JSON.stringify({ user_id: this.session.id }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        mode: "cors",
+      });
+      const data = await result.json();
+      this.habits = data;
+      console.log(this.habits);
     },
   },
 };

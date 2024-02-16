@@ -5,12 +5,15 @@
     :placeholder="in_placeholder"
     v-model="content"
     @input="handleInput"
+    :step="in_step"
+    :min="in_min"
+    :max="in_max"
   />
 </template>
 
 <script>
 export default {
-  props: ["value", "in_type", "in_placeholder"],
+  props: ["value", "in_type", "in_placeholder", "in_step", "in_min", "in_max"],
   emits: ["input"],
   data() {
     return {
