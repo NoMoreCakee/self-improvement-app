@@ -64,7 +64,6 @@ export default {
     async attemptLogin() {
       if (this.loginData.username && this.password) {
         await this.hashPassword(this.password);
-        console.log(this.password);
         try {
           const response = await fetch("http://127.0.0.1:3080/login", {
             method: "POST",
@@ -76,7 +75,8 @@ export default {
           });
           if (response.ok) {
             const data = await response.json();
-            this.emitData(data);
+            this.$store.commit("setSession", data);
+            this.$cookies.set("session", data);
             this.$router.push("/home");
             return true;
           } else {
@@ -96,9 +96,6 @@ export default {
           this.emptyData = false;
         }, 3000);
       }
-    },
-    emitData(data) {
-      this.$emit("emitData", data);
     },
     async hashPassword(plain_pass) {
       try {

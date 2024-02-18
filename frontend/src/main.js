@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import './style.css'
 import VueCookies from 'vue-cookies'
+import Vuex from 'vuex'
 
 import App from './App.vue'
 
@@ -24,11 +25,28 @@ const router = createRouter({
     { path: '/home', component: HomeView },
     { path: '/habits', component: HabitsView },
     { path: '/register', component: RegisterView },
-    { path: '/:notFound', redirect:'/'}
+    { path: '/:notFound', redirect: '/home' },
   ],
 })
 app.use(router)
-app.use(VueCookies, { expires: '7d' })
+app.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    session: undefined,
+  },
+  mutations: {
+    setSession(state, session) {
+      state.session = session
+    },
+    logout(state) {
+      state.session = undefined
+    },
+  },
+})
+
+app.use(store)
+app.use(VueCookies)
 app.component('NavBar', NavBar)
 app.component('TextBox', TextBox)
 app.component('InputBar', InputBar)

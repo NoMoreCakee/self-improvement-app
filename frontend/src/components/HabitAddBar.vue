@@ -105,12 +105,12 @@ export default {
           }
         }
         const sendingData = {
-          user_id: this.session.id,
-          name: this.habitName,
-          repetition: this.habitRep,
-          time: this.habitTime,
-          days: this.selectedDays.join(""),
-          points: this.habitPoints,
+          user_id: this.$store.state.session.user.id,
+          habit_name: this.habitName,
+          habit_frequency: this.habitRep,
+          habit_time: this.habitTime,
+          habit_days: this.selectedDays.join(""),
+          point_value: this.habitPoints,
         };
         try {
           console.log(sendingData);

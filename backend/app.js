@@ -9,6 +9,8 @@ const {
   getUserByName,
   createUser,
   getHabits,
+  deleteHabit,
+  addHabit,
 } = require('./modules/database-connection.js')
 
 dotenv.config()
@@ -99,6 +101,33 @@ app.post('/habits', async (req, res) => {
   const { user_id } = req.body
   const habits = await getHabits(user_id)
   res.send(habits)
+})
+
+app.post('/addHabit', async (req, res) => {
+  console.log(req.body)
+  const {
+    user_id,
+    habit_name,
+    habit_frequency,
+    habit_time,
+    habit_days,
+    point_value,
+  } = req.body
+  const habits = await addHabit(
+    user_id,
+    habit_name,
+    habit_frequency,
+    habit_time,
+    habit_days,
+    point_value,
+  )
+  res.send(habits)
+})
+
+app.post('/deleteHabit', async (req, res) => {
+  const { habit_id } = req.body
+  const habits = await deleteHabit(habit_id)
+  res.send('ok')
 })
 
 app.listen(port, () => {

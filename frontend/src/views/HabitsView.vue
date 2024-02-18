@@ -1,13 +1,9 @@
 <template>
   <div class="flex">
-    <NavBar id="navbar" @logout="logout" :session="session" />
+    <NavBar id="navbar" />
     <div class="w-5/6 flex">
       <div class="w-1/6">
-        <HabitAddBar
-          @added="appendHabit"
-          :session="session"
-          @refresh-habits="getHabits"
-        />
+        <HabitAddBar @added="appendHabit" @refresh-habits="getHabits" />
       </div>
       <div class="w-5/6">
         <div v-if="loading">
@@ -36,23 +32,21 @@ import HabitAddBar from "../components/HabitAddBar.vue";
 import HabitPanel from "../components/HabitPanel.vue";
 export default {
   components: { HabitAddBar, HabitPanel },
-  props: ["session"],
   async created() {
-    if (!this.session) {
-      this.$router.push("/");
-    } else {
-      const result = await fetch("http://127.0.0.1:3080/habits", {
-        method: "POST",
-        body: JSON.stringify({ user_id: this.session.id }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-        mode: "cors",
-      });
-      const data = await result.json();
-      this.habits = data;
-      this.isLoading = false;
-    }
+    console.log(this.$store.state.session);
+    const result = await fetch("http://127.0.0.1:3080/habits", {
+      method: "POST",
+      body: JSON.stringify({ user_id: this.$store.state.session.user.id }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      mode: "cors",
+    });
+    const data = await result.json();
+    console.log(data);
+    this.habits = data;
+    console.log(this.habits);
+    this.isLoading = false;
   },
   data() {
     return {
@@ -98,7 +92,7 @@ export default {
     async getHabits() {
       const result = await fetch("http://127.0.0.1:3080/habits", {
         method: "POST",
-        body: JSON.stringify({ user_id: this.session.id }),
+        body: JSON.stringify({ user_id: this.$store.state.session.user.id }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },

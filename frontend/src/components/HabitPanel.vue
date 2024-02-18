@@ -1,13 +1,8 @@
 <template>
   <div
     class="w-1/2 mx-auto bg-gray-200 border-2 border-gray-300 rounded-lg p-2 my-10 hover:bg-gray-300 duration-150 flex justify-between items-center"
-    :class="isOpen ? 'w-2/3' : 'w-1/2'"
   >
-    <div
-      :class="[object.isDone ? 'line-through' : '']"
-      @click="checkTodo"
-      class="w-11/12"
-    >
+    <div class="w-11/12">
       <h1 class="text-xl">{{ object.habit_name }}</h1>
       <div class="flex gap-2">
         <p class="text-lg">{{ object.habit_frequency }}</p>
@@ -28,7 +23,7 @@
 
 <script>
 export default {
-  props: ["object", "isOpen"],
+  props: ["object"],
   methods: {
     checkTodo() {
       this.$emit("done", this.object.habit_id);
