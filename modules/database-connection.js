@@ -57,7 +57,26 @@ async function getHabits(user_id) {
   const [rows] = await pool.query('SELECT * FROM habits WHERE user_id = ?', [
     user_id,
   ])
+  console.log(rows)
   return rows
+}
+
+async function addHabit(user_id, name, repetition, time, days, points) {
+  const [
+    result,
+  ] = await pool.query(
+    `INSERT INTO habits (user_id, habit_name, habit_frequency, habit_days, habit_time, point_value) VALUES (?,?,?,?,?,?)`,
+    [user_id, name, repetition, days, time, points],
+  )
+  result.success = true
+  return result
+}
+
+async function deleteHabit(habit_id) {
+  const result = await pool.query('DELETE FROM habits WHERE habit_id = ?', [
+    habit_id,
+  ])
+  return result
 }
 
 module.exports = {
@@ -66,4 +85,6 @@ module.exports = {
   getUserByName,
   createUser,
   getHabits,
+  addHabit,
+  deleteHabit,
 }
