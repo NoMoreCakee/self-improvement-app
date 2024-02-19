@@ -6,12 +6,18 @@
         <HabitAddBar @added="appendHabit" @refresh-habits="getHabits" />
       </div>
       <div class="w-5/6">
-        <div v-if="loading">
+        <div
+          v-if="isLoading"
+          class="h-screen text-center justify-center flex flex-col text-2xl"
+        >
           <p>Loading...</p>
         </div>
         <div v-else>
-          <div v-if="habits.length == 0">
-            <h1>No habits yet</h1>
+          <div
+            v-if="habits.length == 0"
+            class="h-screen text-center justify-center flex flex-col text-2xl"
+          >
+            <h1>No habits yet...</h1>
           </div>
           <HabitPanel
             v-for="habit in habits"

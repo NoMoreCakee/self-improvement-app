@@ -57,24 +57,49 @@ async function getHabits(user_id) {
   const [rows] = await pool.query('SELECT * FROM habits WHERE user_id = ?', [
     user_id,
   ])
+  if (rows.length > 0) {
+    rows[0].habit_time =
+      rows[0].habit_time.split(':')[0] + ':' + rows[0].habit_time.split(':')[1]
+  }
   return rows
 }
 
 async function addHabit(user_id, name, repetition, time, days, points) {
   const result = await pool.query(
     `
-    INSERT INTO habits (user_id, habit_name, habit_frequency, habit_time, habit_days, point_value)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO habits (user_id, habit_name, habit_frequency, habit_time, habit_days, point_value, last_appeared)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `,
-    [user_id, name, repetition, time, days, points],
+    [user_id, name, repetition, time, days, points, new Date()],
   )
   result.success = true
+
   return result
 }
 
 async function deleteHabit(id) {
   const result = await pool.query('DELETE FROM habits WHERE habit_id = ?', [id])
   return result
+}
+
+async function doneHabit(id, user_id) {
+  const result = await pool.query(
+    'UPDATE habits SET last_appeared = ? WHERE habit_id = ?',
+    [new Date(), id],
+  )
+  await updatePoints(user_id, id)
+  return result
+}
+
+async function updatePoints(user_id, habit_id) {
+  const habit = await getHabits(habit_id)
+  const points = await getUser(user_id) //+ habit.point_value
+  console.log(points)
+  // const result = await pool.query('UPDATE users SET points = ? WHERE id = ?', [
+  //   points,
+  //   user_id,
+  // ])
+  // return result
 }
 
 module.exports = {
@@ -85,4 +110,5 @@ module.exports = {
   getHabits,
   deleteHabit,
   addHabit,
+  doneHabit,
 }

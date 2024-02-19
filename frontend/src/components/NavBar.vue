@@ -3,7 +3,10 @@
     <div>
       <img src="../assets/vue.svg" class="mx-auto w-24 my-3" />
     </div>
-    <p class="font-medium">{{ this.$store.state.session.user.username }}</p>
+    <p class="font-medium">
+      {{ this.$store.state.session.user.username }} -
+      {{ this.$store.state.session.user.points }}
+    </p>
     <router-link
       v-for="link in links"
       :key="link.id"
