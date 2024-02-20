@@ -31,6 +31,7 @@
 <script>
 export default {
   mounted() {
+    this.todos = [];
     this.getHabits();
   },
   data() {
@@ -49,9 +50,48 @@ export default {
         },
       });
       const data = await result.json();
-      this.todos = data;
+      this.todos = this.filterHabits(data);
       this.isLoading = false;
     },
+    //create a function that filters habits for today
+    filterHabits(habits) {
+      let filtered_todos = [];
+      for (let i = 0; i < habits.length; i++) {
+        const today = new Date();
+        const formattedDate = `${today.getFullYear()}-${
+          today.getMonth() + 1
+        }-${today.getDate()}`;
+        const formattedHabitDate = `${
+          Date(habits[i].last_appeared).getDay
+        }-${Date(habits[i].last_appeared + 1)}-${Date(
+          habits[i].last_appeared
+        )}`;
+        console.log(formattedDate);
+        console.log(formattedHabitDate);
+        if (habits[i].last_appeared !== formattedDate) {
+          if (habits[i].habit_frequency === "daily") {
+            filtered_todos.push(habits[i]);
+          } else if (habits[i].habit_frequency === "weekly") {
+            //turn every element or habit_days to a number
+            habits[i].habit_days = habits[i].habit_days.split("");
+
+            habits[i].habit_days.forEach((day) =>
+              habits[i].habit_days.push(Number(day))
+            );
+
+            if (habits[i].habit_days.includes(new Date().getDay())) {
+              filtered_todos.push(habits[i]);
+            }
+          }
+        }
+      }
+      // filter for habits where last_appeared is not today
+      filtered_todos = filtered_todos.filter(
+        (habit) => habit.last_appeared !== new Date()
+      );
+      return filtered_todos;
+    },
+
     async markDone(todo) {
       const result = await fetch("http://127.0.0.1:3080/doneHabit", {
         method: "POST",
@@ -59,7 +99,13 @@ export default {
           habit_id: todo.habit_id,
           user_id: this.$store.state.session.user.id,
         }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
       });
+      this.$store.commit("addPoints", todo.point_value);
+      todo.last_appeared = new Date().toDateString();
+      this.getHabits();
     },
   },
 };

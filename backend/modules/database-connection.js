@@ -64,6 +64,17 @@ async function getHabits(user_id) {
   return rows
 }
 
+async function getHabit(habit_id) {
+  const [rows] = await pool.query('SELECT * FROM habits WHERE habit_id = ?', [
+    habit_id,
+  ])
+  // if (rows.length > 0) {
+  //   rows[0].habit_time =
+  //     rows[0].habit_time.split(':')[0] + ':' + rows[0].habit_time.split(':')[1]
+  // }
+  return rows
+}
+
 async function addHabit(user_id, name, repetition, time, days, points) {
   const result = await pool.query(
     `
@@ -92,14 +103,20 @@ async function doneHabit(id, user_id) {
 }
 
 async function updatePoints(user_id, habit_id) {
-  const habit = await getHabits(habit_id)
-  const points = await getUser(user_id) //+ habit.point_value
-  console.log(points)
-  // const result = await pool.query('UPDATE users SET points = ? WHERE id = ?', [
-  //   points,
-  //   user_id,
-  // ])
-  // return result
+  const habit = await getHabit(habit_id)
+  const points = await getUser(user_id)
+  const new_points = points.points + habit[0].point_value
+  console.log(new_points)
+  const result = await pool.query('UPDATE users SET points = ? WHERE id = ?', [
+    new_points,
+    user_id,
+  ])
+  const result2 = await pool.query(
+    'UPDATE habits SET last_appeared = ? WHERE habit_id = ?',
+    [new Date(), habit_id],
+  )
+  console.log('added')
+  return result
 }
 
 module.exports = {

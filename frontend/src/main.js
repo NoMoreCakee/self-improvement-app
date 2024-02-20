@@ -39,6 +39,9 @@ const store = new Vuex.Store({
     setSession(state, session) {
       state.session = session
     },
+    addPoints(state, points) {
+      state.session.user.points += points
+    },
     logout(state) {
       state.session = undefined
     },
