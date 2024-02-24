@@ -58,17 +58,15 @@ export default {
       let filtered_todos = [];
       for (let i = 0; i < habits.length; i++) {
         const today = new Date();
-        const formattedDate = `${today.getFullYear()}-${
+        const formattedDate = `${new Date().getFullYear()}-${
           today.getMonth() + 1
         }-${today.getDate()}`;
-        const formattedHabitDate = `${
-          Date(habits[i].last_appeared).getDay
-        }-${Date(habits[i].last_appeared + 1)}-${Date(
+        const formattedHabitDate = `${new Date(
           habits[i].last_appeared
-        )}`;
-        console.log(formattedDate);
-        console.log(formattedHabitDate);
-        if (habits[i].last_appeared !== formattedDate) {
+        ).getFullYear()}-${
+          new Date(habits[i].last_appeared).getMonth() + 1
+        }-${new Date(habits[i].last_appeared).getDate()}`;
+        if (formattedHabitDate !== formattedDate) {
           if (habits[i].habit_frequency === "daily") {
             filtered_todos.push(habits[i]);
           } else if (habits[i].habit_frequency === "weekly") {

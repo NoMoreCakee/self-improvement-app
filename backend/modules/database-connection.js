@@ -78,10 +78,10 @@ async function getHabit(habit_id) {
 async function addHabit(user_id, name, repetition, time, days, points) {
   const result = await pool.query(
     `
-    INSERT INTO habits (user_id, habit_name, habit_frequency, habit_time, habit_days, point_value, last_appeared)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO habits (user_id, habit_name, habit_frequency, habit_time, habit_days, point_value)
+    VALUES (?, ?, ?, ?, ?, ?)
   `,
-    [user_id, name, repetition, time, days, points, new Date()],
+    [user_id, name, repetition, time, days, points],
   )
   result.success = true
 
