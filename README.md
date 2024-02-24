@@ -7,3 +7,4 @@
 
 ### Plans for tomorrow:
 - Adding Daily, Weekly, Monthly, and Yearly goals
+
