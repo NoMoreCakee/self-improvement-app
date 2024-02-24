@@ -11,6 +11,7 @@ const {
   getHabits,
   deleteHabit,
   addHabit,
+  doneHabit,
 } = require('./modules/database-connection.js')
 
 dotenv.config()
@@ -47,6 +48,7 @@ app.post('/login', async (req, res) => {
         req.session.user = {
           username: username,
           id: user_data.id,
+          points: user_data.points,
         }
         console.log('Authenticated')
         res.status(201).send(req.session)
@@ -127,6 +129,12 @@ app.post('/addHabit', async (req, res) => {
 app.post('/deleteHabit', async (req, res) => {
   const { habit_id } = req.body
   const habits = await deleteHabit(habit_id)
+  res.send('ok')
+})
+
+app.post('/doneHabit', async (req, res) => {
+  const { habit_id, user_id } = req.body
+  const habits = await doneHabit(habit_id, user_id)
   res.send('ok')
 })
 

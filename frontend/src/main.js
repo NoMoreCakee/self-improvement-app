@@ -38,15 +38,22 @@ const store = new Vuex.Store({
   mutations: {
     setSession(state, session) {
       state.session = session
+      VueCookies.set('session', state.session)
+    },
+    addPoints(state, points) {
+      state.session.user.points += points
+      // update session cookie's value
+      VueCookies.set('session', state.session)
     },
     logout(state) {
       state.session = undefined
+      VueCookies.set('session', {})
     },
   },
 })
 
 app.use(store)
-app.use(VueCookies)
+app.use(VueCookies, { expires: '7d', secure: true })
 app.component('NavBar', NavBar)
 app.component('TextBox', TextBox)
 app.component('InputBar', InputBar)

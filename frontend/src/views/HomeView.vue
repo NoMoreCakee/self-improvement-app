@@ -2,15 +2,14 @@
   <div class="flex w-full">
     <NavBar id="navbar" />
     <div class="p-5 w-5/6">
-      <TextBox title="Who are we?" text="lorem" />
-      <TodoPanel />
+      <TodaysTasks />
     </div>
   </div>
 </template>
 
 <script>
-import TodoPanel from "../components/TodoPanel.vue";
+import TodaysTasks from "../components/TodaysTasks.vue";
 export default {
-  components: { TodoPanel },
+  components: { TodaysTasks },
 };
 </script>

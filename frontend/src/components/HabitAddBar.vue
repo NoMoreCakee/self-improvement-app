@@ -99,6 +99,8 @@ export default {
       console.log(this.habitName, this.habitRep, this.habitTime);
       console.log(this.session);
       if (this.habitName && this.habitRep && this.habitTime) {
+        this.habitTime =
+          this.habitTime.split(":")[0] + ":" + this.habitTime.split(":")[1];
         if (this.habitRep === "weekly") {
           if (this.selectedDays.length === 0) {
             return alert("Please select at least one day!");
@@ -111,6 +113,7 @@ export default {
           habit_time: this.habitTime,
           habit_days: this.selectedDays.join(""),
           point_value: this.habitPoints,
+          last_appeared: Date.now(),
         };
         try {
           console.log(sendingData);

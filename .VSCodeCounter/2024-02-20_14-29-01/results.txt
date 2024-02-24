@@ -1,0 +1,73 @@
+Date : 2024-02-20 14:29:01
+Directory : c:\Users\sanyi\Desktop\A\project
+Total : 30 files,  4901 codes, 50 comments, 103 blanks, all 5054 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          4 |      3,778 |          0 |          4 |      3,782 |
+| Vue        |         12 |        738 |          0 |         31 |        769 |
+| JavaScript |          6 |        308 |          6 |         40 |        354 |
+| SQL        |          1 |         38 |         43 |         20 |        101 |
+| XML        |          4 |         16 |          1 |          3 |         20 |
+| HTML       |          1 |         13 |          0 |          1 |         14 |
+| Markdown   |          1 |          7 |          0 |          3 |         10 |
+| CSS        |          1 |          3 |          0 |          1 |          4 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                       | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                          |         30 |      4,901 |         50 |        103 |      5,054 |
+| . (Files)                                                                  |          2 |         45 |         43 |         23 |        111 |
+| backend                                                                    |          4 |      1,570 |          4 |         30 |      1,604 |
+| backend (Files)                                                            |          3 |      1,461 |          0 |         15 |      1,476 |
+| backend\modules                                                            |          1 |        109 |          4 |         15 |        128 |
+| frontend                                                                   |         24 |      3,286 |          3 |         50 |      3,339 |
+| frontend (Files)                                                           |          6 |      2,479 |          2 |          7 |      2,488 |
+| frontend\public                                                            |          1 |          1 |          0 |          0 |          1 |
+| frontend\src                                                               |         17 |        806 |          1 |         43 |        850 |
+| frontend\src (Files)                                                       |          3 |         70 |          0 |         11 |         81 |
+| frontend\src\assets                                                        |          3 |         15 |          1 |          3 |         19 |
+| frontend\src\components                                                    |          7 |        369 |          0 |         18 |        387 |
+| frontend\src\views                                                         |          4 |        352 |          0 |         11 |        363 |
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                   | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\sanyi\Desktop\A\project\README.md                                 | Markdown   |          7 |          0 |          3 |         10 |
+| c:\Users\sanyi\Desktop\A\project\backend\app.js                            | JavaScript |        131 |          0 |         13 |        144 |
+| c:\Users\sanyi\Desktop\A\project\backend\modules\database-connection.js    | JavaScript |        109 |          4 |         15 |        128 |
+| c:\Users\sanyi\Desktop\A\project\backend\package-lock.json                 | JSON       |      1,308 |          0 |          1 |      1,309 |
+| c:\Users\sanyi\Desktop\A\project\backend\package.json                      | JSON       |         22 |          0 |          1 |         23 |
+| c:\Users\sanyi\Desktop\A\project\database_scheme.sql                       | SQL        |         38 |         43 |         20 |        101 |
+| c:\Users\sanyi\Desktop\A\project\frontend\index.html                       | HTML       |         13 |          0 |          1 |         14 |
+| c:\Users\sanyi\Desktop\A\project\frontend\package-lock.json                | JSON       |      2,423 |          0 |          1 |      2,424 |
+| c:\Users\sanyi\Desktop\A\project\frontend\package.json                     | JSON       |         25 |          0 |          1 |         26 |
+| c:\Users\sanyi\Desktop\A\project\frontend\postcss.config.js                | JavaScript |          6 |          0 |          1 |          7 |
+| c:\Users\sanyi\Desktop\A\project\frontend\public\vite.svg                  | XML        |          1 |          0 |          0 |          1 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\App.vue                      | Vue        |         17 |          0 |          2 |         19 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\assets\close.svg             | XML        |          1 |          0 |          0 |          1 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\assets\hamburger.svg         | XML        |         13 |          1 |          3 |         17 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\assets\vue.svg               | XML        |          1 |          0 |          0 |          1 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\components\DefaultButton.vue | Vue        |         13 |          0 |          2 |         15 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\components\HabitAddBar.vue   | Vue        |        152 |          0 |          3 |        155 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\components\HabitPanel.vue    | Vue        |         35 |          0 |          2 |         37 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\components\InputBar.vue      | Vue        |         28 |          0 |          2 |         30 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\components\NavBar.vue        | Vue        |         53 |          0 |          3 |         56 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\components\TextBox.vue       | Vue        |         17 |          0 |          3 |         20 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\components\TodaysTasks.vue   | Vue        |         71 |          0 |          3 |         74 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\main.js                      | JavaScript |         50 |          0 |          8 |         58 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\style.css                    | CSS        |          3 |          0 |          1 |          4 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\views\HabitsView.vue         | Vue        |        112 |          0 |          2 |        114 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\views\HomeView.vue           | Vue        |         14 |          0 |          2 |         16 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\views\LoginView.vue          | Vue        |        116 |          0 |          4 |        120 |
+| c:\Users\sanyi\Desktop\A\project\frontend\src\views\RegisterView.vue       | Vue        |        110 |          0 |          3 |        113 |
+| c:\Users\sanyi\Desktop\A\project\frontend\tailwind.config.js               | JavaScript |          7 |          1 |          1 |          9 |
+| c:\Users\sanyi\Desktop\A\project\frontend\vite.config.js                   | JavaScript |          5 |          1 |          2 |          8 |
+| Total                                                                      |            |      4,901 |         50 |        103 |      5,054 |
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
