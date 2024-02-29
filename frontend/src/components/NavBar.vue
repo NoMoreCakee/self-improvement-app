@@ -1,12 +1,19 @@
 <template>
   <div class="flex flex-col w-1/6 text-center text-lg h-screen bg-gray-200">
     <div>
-      <img src="../assets/vue.svg" class="mx-auto w-24 my-3" />
+      <img src="../assets/vue.svg" class="mx-auto w-24 mt-3" />
     </div>
-    <p class="font-medium">
-      {{ this.$store.state.session.user.username }} -
-      {{ this.$store.state.session.user.points }}
-    </p>
+    <div
+      class="flex flex-col items-center gap-1 border-b-2 border-gray-300 py-3"
+    >
+      <p class="font-medium text-xl">
+        {{ this.$store.state.session.user.username }}
+      </p>
+      <span
+        class="bg-gray-300 border-gray-400 border px-2 rounded-full w-1/5 mx-auto font-medium hover:bg-gray-400 duration-150"
+        >{{ this.$store.state.session.user.points }}</span
+      >
+    </div>
     <router-link
       v-for="link in links"
       :key="link.id"
