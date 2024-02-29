@@ -2,7 +2,6 @@
   <div
     class="w-full h-screen bg-gray-200 border-l-2 border-l-gray-300 p-5 text-center"
   >
-    <div class="flex flex-row-reverse mt-2 mb-4"></div>
     <h1 class="text-2xl my-4">Add habits</h1>
     <form @submit.prevent="addHabit">
       <InputBar in_type="text" in_placeholder="Name" v-model="habitName" />

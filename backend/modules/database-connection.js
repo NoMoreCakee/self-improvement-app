@@ -119,6 +119,13 @@ async function updatePoints(user_id, habit_id) {
   return result
 }
 
+async function getGoals(user_id) {
+  const result = await pool.query('SELECT * FROM goals WHERE user_id = ?', [
+    user_id,
+  ])
+  return result
+}
+
 module.exports = {
   getUsers,
   getUser,
@@ -128,4 +135,5 @@ module.exports = {
   deleteHabit,
   addHabit,
   doneHabit,
+  getGoals,
 }

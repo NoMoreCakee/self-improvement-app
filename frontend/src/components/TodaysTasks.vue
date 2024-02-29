@@ -25,6 +25,12 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="todos.length == 0 && !isLoading"
+      class="bg-white text-center rounded-lg py-4 mb-3 mt-6"
+    >
+      <p class="text-xl">No tasks for today</p>
+    </div>
   </div>
 </template>
 
