@@ -129,7 +129,7 @@ async function getGoals(user_id) {
 async function updateGoal(id, goal) {
   console.log(goal)
   const result = await pool.query(
-    'UPDATE goals SET goal_current = ?, goal_max = ? WHERE id = ?',
+    'UPDATE goals SET goal_current = ?, goal_max = ? WHERE goal_id = ?',
     [goal.goal_current, goal.goal_max, id],
   )
   return result

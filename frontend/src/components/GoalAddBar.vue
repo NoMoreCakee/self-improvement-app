@@ -7,7 +7,7 @@
       @submit.prevent="addGoal"
       class="flex flex-col justify-center items-center"
     >
-      <InputBar in_type="text" in_placeholder="Name" v-model="goalName" />
+      <InputBar in_type="text" in_placeholder="Name" v-model="goalName" class="w-full"/>
       <select
         class="w-full mt-4 text-lg mx-auto px-2 py-1 rounded-lg outline-none border-2 border-gray-300 hover:bg-none"
         v-model="goalRep"

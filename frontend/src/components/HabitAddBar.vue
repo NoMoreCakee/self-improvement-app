@@ -4,7 +4,7 @@
   >
     <h1 class="text-2xl my-4">Add habits</h1>
     <form @submit.prevent="addHabit">
-      <InputBar in_type="text" in_placeholder="Name" v-model="habitName" />
+      <InputBar in_type="text" in_placeholder="Name" v-model="habitName" class="w-full"/>
       <select
         class="w-full mt-2 mb-1 text-lg mx-auto px-2 py-1 rounded-lg outline-none border-2 border-gray-300 hover:bg-none"
         v-model="habitRep"
