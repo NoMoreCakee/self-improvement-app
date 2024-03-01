@@ -5,9 +5,22 @@
       <div class="w-1/6 flex">
         <GoalAddBar />
       </div>
-      <div v-for="goal in goals" :key="goal.id" class="w-full">
-        <GoalPanel :object="goal" />
+      <div class="w-5/6">
+        <div v-if="isLoading">
+        <h1 class="h-screen text-center justify-center flex flex-col text-2xl">Loading...</h1>
       </div>
+      <div v-else>
+        <div v-if="goals.length == 0">
+          <h1 class="h-screen text-center justify-center flex flex-col text-2xl">No goals yet...</h1>
+        </div>
+        <div v-else>
+          <GoalPanel
+            v-for="goal in goals"
+            :key="goal.goal_id"
+            :object="goal"
+          />
+        </div>
+      </div></div>
     </div>
   </div>
 </template>
@@ -28,6 +41,7 @@ export default {
     );
     const data = await goals.json();
     this.goals = data;
+    this.isLoading = false;
   },
   components: {
     GoalAddBar,
@@ -36,6 +50,7 @@ export default {
   data() {
     return {
       goals: [],
+      isLoading: true,
     };
   },
 };
