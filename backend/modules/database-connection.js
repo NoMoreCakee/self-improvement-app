@@ -126,6 +126,15 @@ async function getGoals(user_id) {
   return result
 }
 
+async function updateGoal(id, goal) {
+  console.log(goal)
+  const result = await pool.query(
+    'UPDATE goals SET goal_current = ?, goal_max = ? WHERE id = ?',
+    [goal.goal_current, goal.goal_max, id],
+  )
+  return result
+}
+
 module.exports = {
   getUsers,
   getUser,
@@ -136,4 +145,5 @@ module.exports = {
   addHabit,
   doneHabit,
   getGoals,
+  updateGoal,
 }

@@ -13,6 +13,7 @@ const {
   addHabit,
   doneHabit,
   getGoals,
+  updateGoal,
 } = require('./modules/database-connection.js')
 
 dotenv.config()
@@ -142,6 +143,14 @@ app.post('/doneHabit', async (req, res) => {
 app.get('/goals/user/:id', async (req, res) => {
   const goals = await getGoals(req.params.id)
   res.send(goals[0])
+})
+
+app.put('/goals/:id', async (req, res) => {
+  const { id } = req.params
+  const { goal } = req.body
+  console.log(id, goal)
+  const response = await updateGoal(id, goal)
+  res.send(response)
 })
 
 app.listen(port, () => {
