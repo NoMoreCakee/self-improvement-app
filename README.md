@@ -1,10 +1,9 @@
-## Last update: 2024. 02. 18.
+## Last update: 2024. 03. 02.
 
 ### Today's progress:
-- Added cookies
-- Habits now update user points
-- A new panel is avaible on the homepage which displays the habits due today.
-
+- Daily, Weekly, and Monthly goals are now available
+- You can add, edit, and delete goals
+- Minor design fixes
 ### Plans for tomorrow:
-- Adding Daily, Weekly, Monthly, and Yearly goals
+- Major design fixes
 
