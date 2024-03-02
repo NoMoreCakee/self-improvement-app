@@ -127,11 +127,32 @@ async function getGoals(user_id) {
 }
 
 async function updateGoal(id, goal) {
-  console.log(goal)
+  console.log('updated')
   const result = await pool.query(
     'UPDATE goals SET goal_current = ?, goal_max = ? WHERE goal_id = ?',
     [goal.goal_current, goal.goal_max, id],
   )
+  return result
+}
+
+async function addGoal(user_id, goal) {
+  const result = await pool.query(
+    'INSERT INTO goals (user_id, goal_name, goal_rep, goal_points, goal_current, goal_max) VALUES (?, ?, ?, ?, ?, ?)',
+    [
+      user_id,
+      goal.goal_name,
+      goal.goal_rep,
+      goal.goal_points,
+      goal.goal_current,
+      goal.goal_max,
+    ],
+  )
+  return result
+  // console.log(goal)
+}
+
+async function deleteGoal(id) {
+  const result = await pool.query('DELETE FROM goals WHERE goal_id = ?', [id])
   return result
 }
 
@@ -146,4 +167,6 @@ module.exports = {
   doneHabit,
   getGoals,
   updateGoal,
+  addGoal,
+  deleteGoal,
 }

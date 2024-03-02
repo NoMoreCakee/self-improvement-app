@@ -43,7 +43,7 @@
         in_min="0"
         in_placeholder="Maximum value"
       />
-      <DefaultButton in_text="Add" in_type="submit" />
+      <DefaultButton in_text="Add" in_type="submit"/>
     </form>
   </div>
 </template>
@@ -60,6 +60,24 @@ export default {
       goalMaxValue: 100,
     };
   },
+  methods: {
+    async addGoal() {
+      let res = await fetch(`http://localhost:3080/goals/user/${this.$store.state.session.user.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({goal: {
+          goal_name: this.goalName,
+          goal_rep: this.goalRep,
+          goal_points: this.goalPoints,
+          goal_current: this.goalCurrentValue,
+          goal_max: this.goalMaxValue,
+        }}),
+      });
+      this.$emit("fetchGoals");
+    }
+  }
 };
 </script>
 

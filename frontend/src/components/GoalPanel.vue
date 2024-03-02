@@ -3,7 +3,7 @@
     class="flex flex-col w-1/2 mx-auto bg-gray-200 border-2 border-gray-300 rounded-lg p-2 my-10 hover:bg-gray-300 duration-150"
   >
     <div class="flex justify-between items-center">
-      <div class="w-11/12" @click="editMode = !editMode">
+      <div class="w-full mx-3" @click="editMode = !editMode">
         <h1 class="text-xl">{{ object.goal_name }}</h1>
         <div class="flex justify-between gap-2">
           <p class="text-lg">{{ object.goal_rep }}</p>
@@ -18,14 +18,8 @@
           </div>
         </div>
       </div>
-      <div
-        class="py-3 rounded-full hover:bg-gray-400 duration-150"
-        @click="deleteGoal"
-      >
-        <img src="../assets/close.svg" width="50%" class="mx-auto" />
-      </div>
     </div>
-    <div v-if="editMode" class="flex flex-col">
+    <div v-if="editMode" class="flex flex-col w-full">
       <hr class="border-black mt-3 mb-2" />
       <div class="flex justify-between">
         <h1>EDIT PROGRESS</h1>
@@ -50,11 +44,19 @@
           </div>
         </div>
       </div>
+      <div class="flex w-full justify-between mt-10">
+        <DefaultButton
+        in_text="Delete"
+        class="my-2 w-1/4"
+        @click="deleteGoal"
+      />
+
       <DefaultButton
         in_text="Confirm"
-        class="my-2 w-1/4 self-end"
+        class="my-2 w-1/4"
         @click="updateGoal"
       />
+      </div>
     </div>
   </div>
 </template>
@@ -69,8 +71,9 @@ export default {
   },
   methods: {
     async updateGoal() {
+      console.log(this.object);
       const res = await fetch(
-        `http://localhost:3080/goals/${this.object.id}/`,
+        `http://localhost:3080/goals/${this.object.goal_id}/`,
         {
           method: "PUT",
           headers: {
@@ -79,6 +82,19 @@ export default {
           body: JSON.stringify({ goal: this.object }),
         }
       );
+      this.editMode = false;
+    },
+    async deleteGoal() {
+      const res = await fetch(
+        `http://localhost:3080/goals/${this.object.goal_id}/`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      this.$emit("fetchGoals");
     },
   },
 };
