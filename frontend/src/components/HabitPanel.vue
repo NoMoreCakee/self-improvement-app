@@ -1,13 +1,13 @@
 <template>
   <div
-    class="w-1/2 mx-auto bg-gray-200 border-2 border-gray-300 rounded-lg p-2 my-10 hover:bg-gray-300 duration-150 flex justify-between items-center"
+    class="w-1/2 mx-auto bg-gray-200 border-2 border-gray-300 rounded-lg p-2 my-10 hover:bg-gray-300 duration-150 flex justify-between items-center dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:border-gray-600"
   >
     <div class="w-11/12">
       <h1 class="text-xl">{{ object.habit_name }}</h1>
       <div class="flex gap-2">
         <p class="text-lg">{{ object.habit_frequency }}</p>
         <p v-if="object.habit_frequency == 'weekly'">
-          {{ object.habit_days.split("") }}
+          {{ object.habit_days.split('') }}
         </p>
         <p class="text-lg">{{ object.habit_time }}</p>
       </div>
@@ -23,14 +23,14 @@
 
 <script>
 export default {
-  props: ["object"],
+  props: ['object'],
   methods: {
     checkTodo() {
-      this.$emit("done", this.object.habit_id);
+      this.$emit('done', this.object.habit_id)
     },
     deleteTodo() {
-      this.$emit("delete", this.object.habit_id);
+      this.$emit('delete', this.object.habit_id)
     },
   },
-};
+}
 </script>

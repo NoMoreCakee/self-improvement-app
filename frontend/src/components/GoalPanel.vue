@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col w-1/2 mx-auto bg-gray-200 border-2 border-gray-300 rounded-lg p-2 my-10 hover:bg-gray-300 duration-150"
+    class="flex flex-col w-1/2 mx-auto bg-gray-200 border-2 border-gray-300 rounded-lg p-2 my-10 hover:bg-gray-300 duration-150 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:border-gray-600"
   >
     <div class="flex justify-between items-center">
       <div class="w-full mx-3" @click="editMode = !editMode">
@@ -20,9 +20,9 @@
       </div>
     </div>
     <div v-if="editMode" class="flex flex-col w-full">
-      <hr class="border-black mt-3 mb-2" />
-      <div class="flex justify-between">
-        <h1>EDIT PROGRESS</h1>
+      <hr class="border-black dark:border-gray-700 border-2 mt-3 mb-2" />
+      <div class="flex flex-col justify-between">
+        <h1 class="text-center text-xl mb-5">EDIT PROGRESS</h1>
         <div class="flex flex-col">
           <div class="flex items-center gap-2 justify-end">
             <p>Progress value:</p>
@@ -46,16 +46,16 @@
       </div>
       <div class="flex w-full justify-between mt-10">
         <DefaultButton
-        in_text="Delete"
-        class="my-2 w-1/4"
-        @click="deleteGoal"
-      />
+          in_text="Delete"
+          class="my-2 w-1/4"
+          @click="deleteGoal"
+        />
 
-      <DefaultButton
-        in_text="Confirm"
-        class="my-2 w-1/4"
-        @click="updateGoal"
-      />
+        <DefaultButton
+          in_text="Confirm"
+          class="my-2 w-1/4"
+          @click="updateGoal"
+        />
       </div>
     </div>
   </div>
@@ -63,41 +63,41 @@
 
 <script>
 export default {
-  props: ["object"],
+  props: ['object'],
   data() {
     return {
       editMode: false,
-    };
+    }
   },
   methods: {
     async updateGoal() {
-      console.log(this.object);
+      console.log(this.object)
       const res = await fetch(
         `http://localhost:3080/goals/${this.object.goal_id}/`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ goal: this.object }),
-        }
-      );
-      this.editMode = false;
+        },
+      )
+      this.editMode = false
     },
     async deleteGoal() {
       const res = await fetch(
         `http://localhost:3080/goals/${this.object.goal_id}/`,
         {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        }
-      );
-      this.$emit("fetchGoals");
+        },
+      )
+      this.$emit('fetchGoals')
     },
   },
-};
+}
 </script>
 
 <style scoped>

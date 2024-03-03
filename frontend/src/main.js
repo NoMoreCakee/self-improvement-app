@@ -16,6 +16,7 @@ import NavBar from './components/NavBar.vue'
 import TextBox from './components/TextBox.vue'
 import InputBar from './components/InputBar.vue'
 import DefaultButton from './components/DefaultButton.vue'
+import MobileNavBar from './components/MobileNavBar.vue'
 
 const app = createApp(App)
 
@@ -54,10 +55,17 @@ const store = new Vuex.Store({
   },
 })
 
+app.provide('links', [
+  { name: 'Home', path: '/home' },
+  { name: 'Habits', path: '/habits' },
+  { name: 'Goals', path: '/goals' },
+])
+
 app.use(store)
 app.use(VueCookies, { expires: '7d', secure: true })
 app.component('NavBar', NavBar)
 app.component('TextBox', TextBox)
 app.component('InputBar', InputBar)
+app.component('MobileNavBar', MobileNavBar)
 app.component('DefaultButton', DefaultButton)
 app.mount('#app')

@@ -1,11 +1,14 @@
 <template>
   <div
-    class="w-1/3 mx-auto bg-gray-200 border-2 border-gray-300 my-4 rounded-lg"
+    class="w-1/3 mx-auto bg-gray-200 border-2 dark:bg-gray-800 border-gray-300 rounded-lg"
   >
     <h1 class="text-2xl font-medium text-center my-4">
       Register to *insert name here*
     </h1>
-    <form @submit.prevent="attemptRegister()" class="text-center">
+    <form
+      @submit.prevent="attemptRegister()"
+      class="text-center dark:bg-gray-800"
+    >
       <TextBox
         class="bg-red-300 border-red-400 my-4 mx-4 p-0 font-medium"
         text="Empty or incorrect data!"
@@ -16,7 +19,8 @@
         class="w-1/2"
         in_placeholder="Username"
         v-model="registerData.username"
-      /><br />
+      />
+      <br />
       <InputBar
         in_type="password"
         class="w-1/2"
@@ -42,29 +46,30 @@
       <router-link
         to="/"
         class="text-blue-600 hover:text-blue-700 hover:underline font-medium"
-        >Login here!</router-link
       >
+        Login here!
+      </router-link>
     </p>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["session"],
+  props: ['session'],
   data() {
     return {
-      password: "",
+      password: '',
       registerData: {
-        username: "",
-        hashedPass: "",
-        email: "",
+        username: '',
+        hashedPass: '',
+        email: '',
       },
       emptyData: null,
-    };
+    }
   },
   methods: {
     emitData(data) {
-      this.$emit("emitData", data);
+      this.$emit('emitData', data)
     },
     async attemptRegister() {
       if (
@@ -72,41 +77,41 @@ export default {
         this.password &&
         this.registerData.email
       ) {
-        await this.hashPassword(this.password);
+        await this.hashPassword(this.password)
         try {
-          const result = await fetch("http://127.0.0.1:3080/register", {
-            method: "POST",
+          const result = await fetch('http://127.0.0.1:3080/register', {
+            method: 'POST',
             body: JSON.stringify(this.registerData),
             headers: {
-              "Content-type": "application/json; charset=UTF-8",
+              'Content-type': 'application/json; charset=UTF-8',
             },
-            mode: "cors",
-          });
+            mode: 'cors',
+          })
           if (result.ok) {
-            this.$router.push("/");
+            this.$router.push('/')
           }
         } catch (err) {
-          console.log("no");
+          console.log('no')
         }
       }
     },
     async hashPassword(plain_pass) {
       try {
         const hashBuffer = await crypto.subtle.digest(
-          "SHA-256",
-          new TextEncoder().encode(plain_pass)
-        );
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
+          'SHA-256',
+          new TextEncoder().encode(plain_pass),
+        )
+        const hashArray = Array.from(new Uint8Array(hashBuffer))
         const hashedString = hashArray
-          .map((byte) => byte.toString(16).padStart(2, "0"))
-          .join("");
-        this.registerData.hashedPass = hashedString;
+          .map((byte) => byte.toString(16).padStart(2, '0'))
+          .join('')
+        this.registerData.hashedPass = hashedString
       } catch (error) {
-        console.error("Error hashing password:", error);
+        console.error('Error hashing password:', error)
       }
     },
   },
-};
+}
 </script>
 
 <style></style>

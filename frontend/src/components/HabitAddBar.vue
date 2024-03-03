@@ -1,9 +1,9 @@
 <template>
   <div
-    class="w-full h-screen bg-gray-200 border-l-2 border-l-gray-300 p-5 text-center"
+    class="w-full h-screen bg-gray-200 border-l-2 border-l-gray-300 p-5 text-center dark:bg-gray-800 dark:border-x-2 dark:border-gray-700"
   >
     <h1 class="text-2xl my-4">Add habits</h1>
-    <form @submit.prevent="addHabit">
+    <form @submit.prevent="addHabit" class="flex flex-col gap-2 items-center">
       <InputBar in_type="text" in_placeholder="Name" v-model="habitName" class="w-full"/>
       <select
         class="w-full mt-2 mb-1 text-lg mx-auto px-2 py-1 rounded-lg outline-none border-2 border-gray-300 hover:bg-none"
@@ -15,7 +15,7 @@
       </select>
       <div
         v-if="habitRep === 'weekly'"
-        class="flex justify-center text-lg my-3 flex-wrap gap-2"
+        class="flex justify-center text-lg mt-3 mb-2 flex-wrap gap-2"
       >
         <div
           v-for="day in weekdays"
@@ -23,8 +23,8 @@
           class="rounded-full w-1/6 p-1 duration-150"
           :class="
             selectedDays.includes(day.id)
-              ? 'bg-blue-400 hover:bg-blue-500'
-              : 'bg-gray-300 hover:bg-gray-400'
+              ? 'bg-blue-400 hover:bg-blue-500 dark:bg-blue-600 dark:hover:bg-blue-500'
+              : 'bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-gray-400'
           "
           @click="selectDay(day)"
         >
@@ -33,7 +33,7 @@
       </div>
       <InputBar
         in_type="time"
-        class="w-full mt-1"
+        class="w-full"
         v-model="habitTime"
         in_placeholder="Time"
       />

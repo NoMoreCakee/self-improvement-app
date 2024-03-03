@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-screen bg-gray-200 border-l-2 border-l-gray-300 p-5 text-center"
+    class="w-full h-screen bg-gray-200 dark:bg-gray-800 dark:border-x-2 dark:border-gray-700 border-l-2 border-l-gray-300 p-5 text-center"
   >
     <h1 class="text-2xl my-4">Add goals</h1>
     <form
@@ -81,4 +81,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@media (prefers-color-scheme: dark) {
+  input, select, button{
+    background-color: #1f2937;
+  }
+}
+</style>
